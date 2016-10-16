@@ -92,4 +92,4 @@ tidy.average.activity <- melt(activity.data.average[,c(1,2,3:68)],
                               variable.name = "feature")
 tidy.average.activity$feature <- as.character(tidy.average.activity$feature)
 
-write.table(tidy.average.activity, "tidyHAR_USD.txt")
+write.table(tidy.average.activity, "tidyHAR_USD.txt", row.name=FALSE)
