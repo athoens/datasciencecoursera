@@ -18,17 +18,7 @@ The data set represents the average of mean and standard deviation for each meas
 |-----------|------------|-------------------------------|
 | testsubject   | integer <br> in range from 1 to 30 | an identifier of the subject who carried out the experiment |
 | activity      | factor <br> 6 levels: <br> WALKING <br> WALKING_UPSTAIRS <br> WALKING_DOWNSTAIRS <br> SITTING <br>  STANDING <br> LAYING | performed activity name  |
-| feature       | character | name of a varible used in the data set   |
-| value         | numeric   | value of a featureed varible   |
-
-### Obtaining a tidy data set
-The following manupilations on the original raw data set were performed:
-
-* The training and the test sets were merged to create one data set.
-* The activity labels were substituted by descriptive activity names (`factor` class) to name the activities in the data set.
-* List of all features from `features.txt` file was used to appropriately label the data set with descriptive variable names.
-* Only the measurements on the mean and standard deviation for each measurement were extracted. _Note_: the choise of mean values is limited by mean values of the measured variables excluding averaged signals in `angle()` variable and a mean frequency `meanFreq()`.
-* From the data set of the mean and standard deviation an independent data set was created with the average of each variable for each activity and each subject (30x6 entries for each variable).
+| 66 features       | character | name of a varible used in the data set   |
 
 ### Feature Selection
 In the following the details on the features names from the original data set are presented.
@@ -88,4 +78,14 @@ tBodyAccJerkMean
 tBodyGyroMean
 tBodyGyroJerkMean
 ```
+### Obtaining a tidy data set
+The following manupilations on the original raw data set were performed:
+
+* The training and the test sets were merged to create one data set.
+* The activity labels were substituted by descriptive activity names (`factor` class) to name the activities in the data set.
+* List of all features from `features.txt` file was used to appropriately label the data set with descriptive variable names.
+* Only the measurements on the mean and standard deviation for each measurement were extracted. _Note_: the choise of mean values is limited by mean values of the measured variables excluding averaged signals in `angle()` variable and a mean frequency `meanFreq()`.
+* From the data set of the mean and standard deviation an independent data set was created with the average of each variable for each activity and each subject (30x6 entries for each variable).
+
+
 
