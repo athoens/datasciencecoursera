@@ -29,7 +29,6 @@ The following manupilations on the original raw data set were performed:
 * List of all features from `features.txt` file was used to appropriately label the data set with descriptive variable names.
 * Only the measurements on the mean and standard deviation for each measurement were extracted. _Note_: the choise of mean values is limited by mean values of the measured variables excluding averaged signals in `angle()` variable and a mean frequency `meanFreq()`.
 * From the data set of the mean and standard deviation an independent data set was created with the average of each variable for each activity and each subject (30x6 entries for each variable).
-* The later data set was melted into a tidy tall data set of 4 variables. This is the long form as mentioned in the rubric as either long or wide form is acceptable
 
 ### Feature Selection
 In the following the details on the features names from the original data set are presented.

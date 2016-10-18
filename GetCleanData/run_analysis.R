@@ -85,6 +85,9 @@ for (i in 1:6) {
 }
 activity.data.average$activity <- as.factor(activity.data.average$activity)
 
+write.table(activity.data.average, "averageHAR_USD.txt", row.name=FALSE)
+
+
 library(reshape2)
 tidy.average.activity <- melt(activity.data.average[,c(1,2,3:68)], 
                               id.vars=(names(activity.data.average)[1:2]),

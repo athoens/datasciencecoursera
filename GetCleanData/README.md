@@ -5,7 +5,7 @@ Peer Graded Assignment - 2nd Project to *Getting and Cleaning Data* course of *D
 ### Obtaining the data set from Git repo
 To get the tidy data set from Git repository run the following code line in R.
 ```
-download.file("https://raw.githubusercontent.com/athoens/datasciencecoursera/master/GetCleanData/tidyHAR_USD.txt", "datagit.txt")
+download.file("https://raw.githubusercontent.com/athoens/datasciencecoursera/master/GetCleanData/averageHAR_USD.txt", "datagit.txt")
 
 data <- read.table("datagit.txt", header = TRUE)
 ```
@@ -19,7 +19,7 @@ The steps creating the tidy data set are described in the Codebook.
 * List of all features from `features.txt` file was used to appropriately label the data set with descriptive variable names.
 * Only the measurements on the mean and standard deviation for each measurement were extracted. _Note_: my choise of mean values is limited by mean values of the measured variables excluding averaged signals in `angle()` variable and a mean frequency `meanFreq()`.
 * From the data set of the mean and standard deviation an independent data set was created with the average of each variable for each activity and each subject (30x6 loop creates the entries for each variable).
-* The later data set was melted into a tidy tall data set of 4 variables via `melt` function from the library `reshape2`. 
+
 
 The generated tidy data text file meets the principles of [Tidy Data by H. Wickham](http://vita.had.co.nz/papers/tidy-data.pdf):
 
