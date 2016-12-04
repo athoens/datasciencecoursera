@@ -32,11 +32,11 @@ ind.2002 <- which(NEI$year==2002)
 ind.2005 <- which(NEI$year==2005)
 ind.2008 <- which(NEI$year==2008)
 
-# take total emossions per year
+# take total emissions per year
 total.PM25.US <- c(sum(NEI$Emissions[ind.1999]), sum(NEI$Emissions[ind.2002]),
                               sum(NEI$Emissions[ind.2005]), sum(NEI$Emissions[ind.2008]))
 
-## Plot 1: total emossions in the US
+## Plot 1: total emissions in the US
 png(filename = "plot1.png", width = 480, height = 480)
 barplot(total.PM25.US, 
         main="total emissions from PM2.5 in the United States",
@@ -70,16 +70,50 @@ dev.off()
 ind.Balt <- which(NEI$fips == "24510")
 # NEI[ind.Balt,]
 library(ggplot2)
-qplot(year, Emissions, NEI[ind.Balt,], geom="bar")
+png(filename = "plot3.png", width = 480, height = 480)
+ggplot(NEI[ind.Balt,], aes(year, Emissions ) ) + geom_point(size = 3) + 
+       geom_smooth(method="lm",se=FALSE) + facet_wrap(~type, scales = "free") +
+       ggtitle( "Emission across the US from different types of sources" ) + 
+       theme(plot.title = element_text(hjust = 0.5))
+dev.off()
 
 # 4. Across the United States, how have emissions from coal combustion-related 
 # sources changed from 1999-2008?
+ind.SCC.coal <- grep("Coal", SCC$EI.Sector)
+EI.Sector.Coal <- SCC$SCC[ind.SCC.coal]
+
+NEI.coal <- NEI[NEI$SCC %in% EI.Sector.Coal,c(4,6)]
+NEI.coal$year <- as.factor(NEI.coal$year)
+
+png(filename = "plot4.png", width = 480, height = 480)
+ggplot(NEI.coal, aes(year, Emissions) ) + geom_bar(stat = "identity", position="dodge") +
+  ggtitle( "total emissions from coal combustion-related source across the US" ) + 
+  theme(plot.title = element_text(hjust = 0.5))
+dev.off()
 
 
 # 5. How have emissions from motor vehicle sources changed from 1999-2008 in Baltimore City?
-
+ind.SCC.motor <- grep("Vehicle", SCC$EI.Sector)
+EI.Sector.motor <- SCC$SCC[ind.SCC.motor]
+NEI.motor <- NEI[(NEI$SCC %in% EI.Sector.motor) & (NEI$fips == "24510"),c(4,6)]
+NEI.motor$year <- as.factor(NEI.motor$year)
+png(filename = "plot5.png", width = 480, height = 480)
+ggplot(NEI.motor, aes(year,Emissions) ) + geom_bar(stat = "identity", position="dodge" ) +
+  ggtitle( "Emissions from motor vehicle sources in Baltimore City" ) + 
+  theme(plot.title = element_text(hjust = 0.5))
+dev.off()
 
 # 6. Compare emissions from motor vehicle sources in Baltimore City with emissions 
 # from motor vehicle sources in Los Angeles County, California (fips == "06037"). 
 # Which city has seen greater changes over time in motor vehicle emissions?
+NEI.motor <- NEI[(NEI$SCC %in% EI.Sector.motor) & (NEI$fips == "24510" | NEI$fips == "06037" ),c(1,4,6)]
+NEI.motor$year <- as.factor(NEI.motor$year)
+png(filename = "plot6.png", width = 480, height = 480)
+ggplot(NEI.motor, aes(year, Emissions, fill=fips ) ) + geom_bar(stat = "identity", position="dodge") +
+  ggtitle( "Emissions from motor vehicle sources in Baltimore City and California" ) + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_fill_discrete( labels = c("California", "Baltimore City") ) +
+  theme(legend.title = element_text(face="bold")) +
+  guides(fill = guide_legend(title = "City", label.vjust = 0.5))
+dev.off()
 

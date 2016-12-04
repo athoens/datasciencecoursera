@@ -1,28 +1,20 @@
+if (!exists("NEI") || !exists("SCC")) {
+  NEI <- readRDS("data/summarySCC_PM25.rds")
+  SCC <- readRDS("data/Source_Classification_Code.rds")
+}
+
 # 3. Of the four types of sources indicated by the type (point, nonpoint, onroad, 
 # nonroad) variable, which of these four sources have seen decreases in emissions 
 # from 1999-2008 for Baltimore City? Which have seen increases in emissions 
 # from 1999-2008? Use the ggplot2 plotting system to make a plot answer this question.
+library(ggplot2)
 
 ind.Balt <- which(NEI$fips == "24510")
-NEI.Baltimore <- NEI[ind.Balt,]
-types <- c("POINT","NONPOINT","NON-ROAD", "ON-ROAD")
-years <- c(1999,2002,2005,2008)
-NEI.Balt.sums <- data.frame(matrix(vector(), 0, 81), stringsAsFactors=F)
-type <- as.character(c(1:16))
-year <- c(1:16)
-tot.emissions <- c(1:16)
 
-for (i in types) {
-    for (j in years) {
-        #print(c(i, j))
-        ind.sub.j <- which(NEI.Baltimore$type == i & 
-                           NEI.Baltimore$year == j)
-        sum.col <- sum(NEI.Baltimore[c(ind.sub.j), 4])
-        
-        NEI.Balt.sums <- rbind2(NEI.Balt.sums,
-                                c(i, as.character(j), as.character(sum.col)))
-    }
-}
+png(filename = "plot3.png", width = 480, height = 480)
+ggplot(NEI[ind.Balt,], aes(year, Emissions ) ) + geom_point(size = 3) + 
+  geom_smooth(method="lm",se=FALSE) + facet_wrap(~type, scales = "free") +
+  ggtitle( "Emission across the US from different types of sources" ) + 
+  theme(plot.title = element_text(hjust = 0.5))
+dev.off()
 
-#library(ggplot2)
-#qplot(year, Emissions, NEI[ind.Balt,], geom="bar")
